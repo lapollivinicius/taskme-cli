@@ -1,15 +1,41 @@
 {
   "name": "taskme-cli",
   "version": "1.0.0",
+  "description": "A simple CLI task manager",
+  "license": "MIT",
+
   "type": "module",
+
+  "bin": {
+    "task": "./dist/index.js"
+  },
+
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+
   "scripts": {
-    "task": "bun ./index.ts"
+    "dev": "bun run src/index.ts",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build"
   },
+
+  "keywords": [
+    "cli",
+    "task",
+    "todo",
+    "terminal"
+  ],
+
+  "engines": {
+    "node": ">=20"
+  },
+
   "devDependencies": {
-    "@types/bun": "latest",
-    "@types/node": "^26.1.0",
-    "typescript": "^6.0.3"
-  },
-  "module": "index.ts",
-  "private": true
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
 }
