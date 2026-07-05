@@ -1,7 +1,7 @@
 import fs from "node:fs"
-import { Task } from "../models/model.ts";
+import { Task } from "../models/model.js";
 
-const filePath = "./src/data/TASKME.json";
+const filePath = "./TASKME.json";
 
 export function load() {
 

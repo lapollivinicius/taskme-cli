@@ -1,10 +1,11 @@
-import router from "./src/routes/router.ts"
-import { printInfo } from "./src/utils/print.ts"
+#!/usr/bin/env node
+import router from "./routes/router.js"
+import { printInfo } from "./utils/print.js"
 
 const [,,command, first_field, second_field, third_field, ...args] = process.argv
 
 if(!command) {
-  printInfo("use a command -> 'help' to know more")
+  printInfo("use 'cd project' and 'task init' to use taskme")
   process.exit(0)
 }
 

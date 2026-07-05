@@ -1,6 +1,6 @@
-import { Task } from "../models/model.ts";
-import { load } from "../repository/database.ts";
-import { colors, style, background, reset, progess_bar } from "./utils.ts";
+import { Task } from "../models/model.js";
+import { load } from "../repository/database.js";
+import { colors, style, background, reset, progess_bar } from "./utils.js";
 
 export function printTasks(tasks: Task[]) { 
 
@@ -13,12 +13,12 @@ export function printTasks(tasks: Task[]) {
 
   tasks.forEach((task: Task, index: number) => {
 
-    const hours = Math.floor((((task.time || 0) - (Date.now() - task.createdAt)) / 3600000))
-    const color = hours >= 1 ?  colors.white : colors.red
-    const status = hours >= 1 ?  "○" : "✗"
+    const hours = (((task.time || 0) - (Date.now() - task.createdAt)) / 3600000)
+    const color = hours >= 0 ?  colors.white : colors.red
+    const status = hours >= 0 ?  "○" : "✗"
 
     console.log(
-      `${color}${style.bold}${status.padEnd(4)}${task.id?.slice(0, 5).padEnd(7)}${hours <= 0 ? "0h".padEnd(5) : hours+"h".padEnd(4)}"${task.content}"${reset}`
+      `${color}${style.bold}${status.padEnd(4)}${task.id?.slice(0, 5).padEnd(7)}${Math.abs(Math.ceil(hours))+"h".padEnd(4)}"${task.content}"${reset}`
     );
 
   });
@@ -105,7 +105,12 @@ add <content> <dl>           to add a task
 check <id>                   to check a task and add in history
 restore <id> <dl>            to restore a task from history
 remove <id>                  to delete a task from tasks or history
-edit <id> <content> <dl>     to delete a task from tasks or history`
+edit <id> <content> <dl>     to delete a task from tasks or history (use . in <content> to keep the content)
+
+captions
+dl: deadline -> hours to finish the task
+st: status (✔: checked, ✗: deadline is over, ○: in progress )
+content: description to task`
 )
   return
 }
@@ -119,10 +124,11 @@ https://github.com/lapollivinicius/taskme-cli ${reset}
 
 export function printCredit() {
   console.log(
-`${background.black}${colors.yellow}THANKS FOR COMING :)
+` ${background.black}${colors.yellow}THANKS FOR COMING :)
 ▄▖▄▖▄▖▄▖▄▖▄▖▄   ▄ ▖▖  ▖ ▄▖▄▖▄▖▖ ▖ ▄▖
 ▌ ▙▘▙▖▌▌▐ ▙▖▌▌  ▙▘▌▌  ▌ ▌▌▙▌▌▌▌ ▌ ▐ 
 ▙▖▌▌▙▖▛▌▐ ▙▖▙▘  ▙▘▐   ▙▖▛▌▌ ▙▌▙▖▙▖▟▖
-https://github.com/lapollivinicius ${reset}`)
+
+${colors.green}███${colors.yellow}███${colors.blue}█ https://github.com/lapollivinicius ${reset}`)
   return
 }

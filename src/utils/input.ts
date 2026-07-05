@@ -1,7 +1,7 @@
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { colors, style, background, reset} from "./utils.ts";
-import { printError } from "./print.ts";
+import { colors, style, background, reset} from "./utils.js";
+import { printError } from "./print.js";
 
 export async function confirmPrompt(msg: string) {
 

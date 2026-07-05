@@ -1,6 +1,6 @@
-import { Task } from "../models/model.ts";
-import { load, save } from "../repository/database.ts";
-import { confirmPrompt } from "../utils/input.ts";
+import { Task } from "../models/model.js";
+import { load, save } from "../repository/database.js";
+import { confirmPrompt } from "../utils/input.js";
 import {
   printAll,
   printHistory,
@@ -11,12 +11,18 @@ import {
   printHelp,
   printDocs,
   printCredit,
-} from "../utils/print.ts";
+  printInfo,
+} from "../utils/print.js";
 
-export function create(content: string, hours?: number) {
+export function create(content: string, hours: number) {
 
   const db = load();
-  const time = Math.abs(hours || 0)
+  if(isNaN(hours)) {
+    printError("Insert only number to hours")
+    return
+  }
+  const time = hours
+  
   const task = new Task(content, time * 3600000, new Date().getTime());
   db.tasks.push(task);
   save(db);
@@ -28,7 +34,7 @@ export function list() {
   const db = load();
 
   if (db.tasks.length === 0) {
-    printError("No tasks found.");
+    printInfo("No tasks, try 'history'.");
     return;
   }
 
@@ -119,10 +125,14 @@ export function init() {
   printInit();
 }
 
-export async function restore(id: string, hours?: number) {
+export async function restore(id: string, hours: number) {
 
   const db = load();
-  const time = Math.abs(hours || 0)
+  if(isNaN(hours)) {
+    printError("Insert only number to hours")
+    return
+  }
+  const time = hours
   const checked: Task = db.history.find((task: Task) =>
     task.id?.startsWith(id),
   );
@@ -139,11 +149,12 @@ export async function restore(id: string, hours?: number) {
   }
 
   if (time) {
-    checked.time = time * 3600000;
+    checked.time = time * 3600000
   } else {
     checked.time = 0
   }
 
+  checked.checked = false
   checked.createdAt = Date.now();
   db.tasks.push(checked);
   db.history = db.history.filter((task: Task) => task.id !== checked.id);
@@ -190,10 +201,14 @@ export async function erase(id: string) {
   }
 }
 
-export async function edit(id: string, content: string, hours?: number) {
+export async function edit(id: string, content: string, hours: number) {
 
-  const db = load()
-  const time = Math.abs(hours || 0)
+  const db = load();
+  if(isNaN(hours)) {
+    printError("Insert only number to hours")
+    return
+  }
+  const time = hours
   const task: Task = db.tasks.find((task: Task) => task.id?.startsWith(id))
 
   if(!task) {
@@ -201,13 +216,9 @@ export async function edit(id: string, content: string, hours?: number) {
     return
   }
 
-  if(time) {
-    task.time = time * 360000
-  } else {
-    task.time = 0
-  }
 
-  if(content) task.content = content
+  task.time = time * 3600000 || 0
+  if(content !== ".") task.content = content
   save(db)
 
   printSucess(`task ${task.id?.slice(0,5)} edited`)
