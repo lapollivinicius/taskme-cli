@@ -2,6 +2,10 @@ import { Task } from "../models/model.js";
 import { load } from "../repository/database.js";
 import { colors, style, background, reset, progess_bar } from "./utils.js";
 
+export function printVersion(version: string) {
+  console.log(`${colors.yellow}${style.reverse}${style.bold} ▶ TASKME VERSION: ${version} ${reset}`)
+}
+
 export function printTasks(tasks: Task[]) { 
 
   console.log(`${colors.yellow}${style.bold}${"▶ TASKS "}${reset}`);
@@ -92,6 +96,7 @@ export function printHelp() {
 use this commads to use tasks
 
 init       init the tasks
+version  to know the version
 
 list       list tasks
 history    list tasks checked, the history

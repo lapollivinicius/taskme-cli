@@ -1,9 +1,14 @@
-import { list, history, all, clear, reset, init, create, check, restore, erase, help, docs, edit, credit } from "../service/task.js";
+import { version, list, history, all, clear, reset, init, create, check, restore, erase, help, docs, edit, credit } from "../service/task.js";
 import { printError, printInfo } from "../utils/print.js";
 
 export default function router(command: string, first_field?: string, second_field?: string, third_field?: string, args?: string[]) {
 
   switch (command) {
+
+    case "version":
+      if(first_field) return printError("Command Invalid")
+      version()
+      break
     
     case "list":
       if(first_field) return printError("Command Invalid")

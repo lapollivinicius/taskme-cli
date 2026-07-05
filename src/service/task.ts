@@ -1,3 +1,4 @@
+import pkg from '../../package.json' with { type: 'json' };
 import { Task } from "../models/model.js";
 import { load, save } from "../repository/database.js";
 import { confirmPrompt } from "../utils/input.js";
@@ -12,7 +13,13 @@ import {
   printDocs,
   printCredit,
   printInfo,
+  printVersion,
 } from "../utils/print.js";
+
+export function version() {
+  printVersion(pkg.version)
+  return
+}
 
 export function create(content: string, hours: number) {
 
@@ -28,6 +35,7 @@ export function create(content: string, hours: number) {
   save(db);
 
   printSucess("task added");
+  return
 }
 
 export function list() {
@@ -39,6 +47,7 @@ export function list() {
   }
 
   printTasks(db.tasks);
+  return
 }
 
 export function history() {
@@ -50,6 +59,7 @@ export function history() {
   }
 
   printHistory(db.history);
+  return
 }
 
 export function all() {
@@ -62,6 +72,7 @@ export function all() {
   }
 
   printAll(all);
+  return
 }
 
 export async function check(id: string) {
@@ -79,16 +90,14 @@ export async function check(id: string) {
     printError("Cancelled");
     return;
   }
-
+  checked.time = 0
   checked.checked = true;
-  checked.checkedAt = Date.now();
   db.history.push(checked);
-
   db.tasks = db.tasks.filter((task: Task) => task.id !== checked.id);
-
   save(db);
 
   printSucess(`task ${checked.id?.slice(0, 5)} checked and added in history`);
+  return
 }
 
 export async function clear() {
@@ -103,6 +112,7 @@ export async function clear() {
   save(db);
 
   printSucess("The History is clean");
+  return
 }
 
 export async function reset() {
@@ -118,11 +128,13 @@ export async function reset() {
   save(db);
 
   printSucess("The Tasks and History are clean");
+  return
 }
 
 export function init() {
   load();
   printInit();
+  return
 }
 
 export async function restore(id: string, hours: number) {
@@ -138,7 +150,7 @@ export async function restore(id: string, hours: number) {
   );
 
   if (!checked) {
-    printError("Task Not Found");
+    printError("The task needs to be marked as checked");
     return;
   }
 
@@ -163,6 +175,7 @@ export async function restore(id: string, hours: number) {
   printSucess(
     `task ${checked.id?.slice(0, 5)} restored and added back to the tasks`,
   );
+  return
 }
 
 export async function erase(id: string) {
@@ -199,6 +212,7 @@ export async function erase(id: string) {
     printSucess(`task ${history.id?.slice(0, 5)} removed from history`);
     return;
   }
+  return
 }
 
 export async function edit(id: string, content: string, hours: number) {
@@ -208,6 +222,7 @@ export async function edit(id: string, content: string, hours: number) {
     printError("Insert only number to hours")
     return
   }
+
   const time = hours
   const task: Task = db.tasks.find((task: Task) => task.id?.startsWith(id))
 
@@ -216,13 +231,18 @@ export async function edit(id: string, content: string, hours: number) {
     return
   }
 
+  const confirm = await confirmPrompt("Are you sure?");
+  if (!confirm) {
+    printError("Cancelled");
+    return;
+  }
 
   task.time = time * 3600000 || 0
   if(content !== ".") task.content = content
   save(db)
 
   printSucess(`task ${task.id?.slice(0,5)} edited`)
-
+  return
 }
 
 export function help() {

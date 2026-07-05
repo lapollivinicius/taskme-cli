@@ -4,7 +4,6 @@ export class Task {
   time: number | undefined;
   checked: boolean;
   createdAt: number;
-  checkedAt: number;
 
   constructor(content: string, time: number, createdAt: number) {
     this.id = crypto.randomUUID().split("-")[0];
@@ -12,6 +11,5 @@ export class Task {
     this.time = time;
     this.checked = false;
     this.createdAt = createdAt;
-    this.checkedAt = 0
   }
 }
