@@ -1,6 +1,6 @@
-<div align="center">
 
-# TaskMe
+# Taskme - a simple local cli todo
+
 
 ```
 ██████ ▄████▄ ▄█████ ██ ▄█▀ ██▄  ▄██ ██████ ██
@@ -8,7 +8,7 @@
   ██   ██  ██ █████▀ ██ ▀█▄ ██    ██ ██▄▄▄▄ ▄▄
 ```
 
-> ⚡ A fast, beautiful and **100% local** task manager for your terminal.
+A fast, beautiful and **100% local** task manager for your terminal.
 
 Keep your tasks **inside each project**, where you already work.
 
@@ -20,62 +20,43 @@ Keep your tasks **inside each project**, where you already work.
 
 </p>
 
-</div>
-
 ---
 
-## Why TaskMe?
+## Use Taskme
 
 Unlike cloud task managers, **TaskMe stores everything locally**.
 
 Every project has its own task list through a simple `TASKME.json` file.
 
-✅ No account
-
-✅ No internet
-
-✅ No external database
-
-✅ No configuration
+- No account
+- No internet
+- No external database
+- No configuration
 
 Just open your project and continue working.
 
----
-
-# 🎬 Preview
-
-> Place one or two GIFs here.
+# Preview
 
 <p align="center">
 
-<!-- GIF 1 -->
-
-<img src="./assets/demo-list.gif" width="800">
-
-<br><br>
-
-<!-- GIF 2 -->
-
-<img src="./assets/demo-check.gif" width="800">
+<img src="./assets/taskme.gif" width="800">
 
 </p>
 
----
+# Features
 
-# ✨ Features
-
-- ⚡ Zero configuration
-- 📁 Project-based tasks
-- 💾 Local JSON database
-- ⏰ Deadlines
-- 📜 Task history
-- ♻️ Restore completed tasks
-- 🎨 Beautiful terminal output
-- 🔓 Open Source
+- Zero configuration
+- Project-based tasks
+- Local JSON database
+- Deadlines
+- Task history
+- Restore completed tasks
+- Beautiful terminal output
+- Open Source
 
 ---
 
-# 📦 Installation
+# Installation
 
 ### npm
 
@@ -91,9 +72,13 @@ bun add -g taskme
 
 ---
 
-# 🚀 Getting Started
+# Getting Started
 
 Initialize TaskMe inside your project.
+
+```bash
+cd my-project
+```
 
 ```bash
 task init
@@ -109,7 +94,7 @@ Each project keeps its own independent tasks.
 
 ---
 
-# 📚 Commands
+# Commands
 
 | Command | Description |
 |----------|-------------|
@@ -126,7 +111,7 @@ Each project keeps its own independent tasks.
 
 ---
 
-# 💻 Example
+# Example
 
 ```bash
 task list
@@ -154,16 +139,16 @@ task check a0629
 
 ---
 
-# 🏗️ Stack
+# Stack
 
-- 🔷 TypeScript
-- 🟢 Node.js
-- 📦 Bun
-- 📄 JSON Storage
+- TypeScript
+- Node.js
+- Bun
+- JSON Storage
 
 ---
 
-# 📂 Project Structure
+# Project Structure
 
 ```
 src
@@ -177,7 +162,7 @@ src
 
 ---
 
-# 🗺️ Roadmap
+# Roadmap
 
 - [x] Tasks
 - [x] History
@@ -192,7 +177,7 @@ src
 
 ---
 
-# 🤝 Contributing
+# Contributing
 
 Pull requests are welcome.
 
@@ -200,9 +185,9 @@ If you have ideas or found a bug, open an issue.
 
 ---
 
-# 👨‍💻 Author
+# Author
 
-**Lapolli**
+made while sleepy by **Lapolli**
 
 GitHub:
 https://github.com/lapollivinicius
