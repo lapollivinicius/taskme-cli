@@ -13,7 +13,7 @@ export function printTasks(tasks: Task[]) {
 
   tasks.forEach((task: Task, index: number) => {
 
-    const hours = Math.floor((((task.hours || 0) - (Date.now() - task.createdAt)) / 3600000))
+    const hours = Math.floor((((task.time || 0) - (Date.now() - task.createdAt)) / 3600000))
     const color = hours >= 1 ?  colors.white : colors.red
     const status = hours >= 1 ?  "○" : "✗"
 
@@ -87,11 +87,42 @@ export function printError(msg: string) {
 }
 
 export function printHelp() {
-  console.log(``)
+  console.log(
+`${background.black}${colors.yellow}HI, THERE :) ${reset}
+use this commads to use tasks
+
+init       init the tasks
+
+list       list tasks
+history    list tasks checked, the history
+all        list tasks and history
+clear      to clear the history
+reset      to clear tasks and history
+docs       to open docs
+credit     to know the creator :)
+
+add <content> <dl>           to add a task
+check <id>                   to check a task and add in history
+restore <id> <dl>            to restore a task from history
+remove <id>                  to delete a task from tasks or history
+edit <id> <content> <dl>     to delete a task from tasks or history`
+)
   return
 }
 
 export function printDocs() {
-  console.log(``)
+  console.log(`${background.black}${colors.yellow}this is an open source project, you are free to contribuite
+https://github.com/lapollivinicius/taskme-cli ${reset}
+`)
+  return
+}
+
+export function printCredit() {
+  console.log(
+`${background.black}${colors.yellow}THANKS FOR COMING :)
+▄▖▄▖▄▖▄▖▄▖▄▖▄   ▄ ▖▖  ▖ ▄▖▄▖▄▖▖ ▖ ▄▖
+▌ ▙▘▙▖▌▌▐ ▙▖▌▌  ▙▘▌▌  ▌ ▌▌▙▌▌▌▌ ▌ ▐ 
+▙▖▌▌▙▖▛▌▐ ▙▖▙▘  ▙▘▐   ▙▖▛▌▌ ▙▌▙▖▙▖▟▖
+https://github.com/lapollivinicius ${reset}`)
   return
 }

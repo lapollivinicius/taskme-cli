@@ -10,11 +10,14 @@ import {
   printError,
   printHelp,
   printDocs,
+  printCredit,
 } from "../utils/print.ts";
 
-export function create(content: string, index: number) {
+export function create(content: string, hours?: number) {
+
   const db = load();
-  const task = new Task(content, index * 3600000, new Date().getTime());
+  const time = Math.abs(hours || 0)
+  const task = new Task(content, time * 3600000, new Date().getTime());
   db.tasks.push(task);
   save(db);
 
@@ -36,7 +39,7 @@ export function history() {
   const db = load();
 
   if (db.history.length === 0) {
-    console.log("No tasks found.");
+    printError("No tasks found.");
     return;
   }
 
@@ -116,8 +119,10 @@ export function init() {
   printInit();
 }
 
-export async function restore(id: string, index?: number) {
+export async function restore(id: string, hours?: number) {
+
   const db = load();
+  const time = Math.abs(hours || 0)
   const checked: Task = db.history.find((task: Task) =>
     task.id?.startsWith(id),
   );
@@ -133,7 +138,11 @@ export async function restore(id: string, index?: number) {
     return;
   }
 
-  if (index) checked.hours = index * 3600000;
+  if (time) {
+    checked.time = time * 3600000;
+  } else {
+    checked.time = 0
+  }
 
   checked.createdAt = Date.now();
   db.tasks.push(checked);
@@ -181,6 +190,30 @@ export async function erase(id: string) {
   }
 }
 
+export async function edit(id: string, content: string, hours?: number) {
+
+  const db = load()
+  const time = Math.abs(hours || 0)
+  const task: Task = db.tasks.find((task: Task) => task.id?.startsWith(id))
+
+  if(!task) {
+    printError("Task Not Found")
+    return
+  }
+
+  if(time) {
+    task.time = time * 360000
+  } else {
+    task.time = 0
+  }
+
+  if(content) task.content = content
+  save(db)
+
+  printSucess(`task ${task.id?.slice(0,5)} edited`)
+
+}
+
 export function help() {
   printHelp()
   return
@@ -188,5 +221,10 @@ export function help() {
 
 export function docs() {
   printDocs();
+  return
+}
+
+export function credit() {
+  printCredit();
   return
 }
